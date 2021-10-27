@@ -1,4 +1,4 @@
-# DuckDuckGo-image-api
+# DuckDuckGo-images-api
 
 This project is Go adaptation of Python3 forked [duckduckgo-images-api](https://github.com/joeyism/duckduckgo-images-api) . I made this modules because this module will be need in my future project .
 
