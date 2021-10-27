@@ -11,7 +11,7 @@ Import
 # Example Use Cases
 
 #### Get Search Results
-```
+```go
 func main() {
 	hunsen := goduckgo.Search(goduckgo.Query{Keyword: "duck"})
     fmt.Print(hunsen.Results)
@@ -19,7 +19,7 @@ func main() {
 
 ```
 #### Get Search Result Image
-```
+```go
 func main() {
 	hunsen := goduckgo.Search(goduckgo.Query{Keyword: "duck"})
 	for _, somtam := range hunsen.Results {
@@ -30,7 +30,7 @@ func main() {
 }
 ```
 #### Specific P and S
-```
+```go
 func main() {
 	hunsen := goduckgo.Search(goduckgo.Query{Keyword: "duck", P: "1", S: "200"})
     fmt.Print(hunsen.Results)
