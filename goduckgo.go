@@ -64,24 +64,19 @@ func Search(keyword Query) Gogo {
 
 	requrl := url + "?q=" + keyword.Keyword
 	req, err := http.NewRequest(http.MethodGet, requrl, nil)
-	if err != nil {
-		log.Fatal(err)
-	}
+	log_err(err)
+
 	req.Header.Set("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:93.0) Gecko/20100101 Firefox/93.0")
 
 	res, err := netreq.Do(req)
-	if err != nil {
-		log.Fatal(err)
-	}
+	log_err(err)
 
 	if res.Body != nil {
 		defer res.Body.Close()
 	}
 
 	body, readErr := ioutil.ReadAll(res.Body)
-	if readErr != nil {
-		log.Fatal(readErr)
-	}
+	log_err(readErr)
 
 	hunsen := regexfind(regex_r{Regex: `vqd=([\d-]+)\&`, Body: string(body)})
 
@@ -105,23 +100,18 @@ func Search(keyword Query) Gogo {
 	resq.Header.Add("sec-fetch-mode", "cors")
 	resq.Header.Add("referer", "https://duckduckgo.com/")
 	resq.Header.Add("accept-language", "en-US,enq=0.9")
-	if err != nil {
-		log.Fatal(err)
-	}
+	log_err(err)
+
 	resqs, getErr := netreq.Do(resq)
-	if getErr != nil {
-		log.Fatal(getErr)
-	}
+	log_err(getErr)
 
 	brudy, readErr := ioutil.ReadAll(resqs.Body)
-	if readErr != nil {
-		log.Fatal(readErr)
-	}
+	log_err(readErr)
+
 	duckduck := Gogo{}
 	jsonErr := json.Unmarshal(brudy, &duckduck)
-	if jsonErr != nil {
-		log.Fatal(jsonErr)
-	}
+	log_err(jsonErr)
+
 	log.Println("\nHitting Url Success : " + requrl)
 	return duckduck
 }
@@ -130,4 +120,10 @@ func regexfind(hitin regex_r) string {
 	gexgex := regexp.MustCompile(hitin.Regex)
 	hunsen := gexgex.FindString(string(hitin.Body))
 	return hunsen
+}
+
+func log_err(err error) {
+	if err != nil {
+		log.Fatal(err)
+	}
 }
